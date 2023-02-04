@@ -28,8 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update() 
     {
-        // Check if grounded
-        _isGrounded = Physics2D.OverlapBox(transform.position - _rayOffset, _raySize, 0);
+        GroundCheck();
         
         _movement = Input.GetAxis("Horizontal");
 
@@ -55,6 +54,12 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             _desiredJump = false;
         }
+    }
+
+    private void GroundCheck()
+    {
+        // Check if grounded
+        _isGrounded = Physics2D.OverlapBox(transform.position - _rayOffset, _raySize, 0);
     }
 
     private void OnDrawGizmos() 

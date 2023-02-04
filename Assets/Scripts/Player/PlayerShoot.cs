@@ -61,12 +61,14 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        print("Shoot!");
+        if (_fruits <= 0) return;
+        
         Transform bullet = Instantiate(_fruitBulletPrefab, transform.position, Quaternion.identity);
         if (!bullet) return;
         if (bullet.TryGetComponent(out FruitBullet bulletFruit))
         {
             bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
+            _fruits -= 1;
         }
     }
 
