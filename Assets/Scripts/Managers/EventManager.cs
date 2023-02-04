@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 public static class EventManager
@@ -7,6 +8,11 @@ public static class EventManager
     public static event UnityAction FruitSpawned;
     public static void OnFruitCollected() => FruitCollected?.Invoke();
     public static void OnFruitSpawned() => FruitSpawned?.Invoke();
+    #endregion
+
+    #region Enemies Related
+    public static event UnityAction<SimpleEnemy> EnemyDied;
+    public static void OnEnemyDied(SimpleEnemy enemy) => EnemyDied?.Invoke(enemy);
     #endregion
 
     #region General

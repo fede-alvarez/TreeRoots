@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _resourcesSpawnPoints;
     [SerializeField] private FruitResource _fruitPrefab;
 
-    [Header("Enemies Spawn Points")]
-    [SerializeField] private Transform _enemySpawnPoints;
     private int _spawnPointsAmount;
 
     private static GameManager _instance;
