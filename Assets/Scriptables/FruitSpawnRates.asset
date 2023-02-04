@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b3b8bd760394fb4b481ef324c859b4, type: 3}
   m_Name: FruitSpawnRates
   m_EditorClassIdentifier: 
-  _spawnRates: []
+  _spawnRates:
+  - TimeToGrow: 0
