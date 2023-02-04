@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Fruit Resources")]
     [SerializeField] private Transform _resourcesSpawnPoints;
+    [SerializeField] private FruitResource _fruitPrefab;
 
     [Header("Enemies Spawn Points")]
     [SerializeField] private Transform _enemySpawnPoints;
@@ -34,6 +35,18 @@ public class GameManager : MonoBehaviour
         {
             if (spawn.TryGetComponent(out SpriteRenderer render))
                 render.enabled = false;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex = Random.Range(0, _resourcesSpawnPoints.childCount);
+            Transform randomPoint = _resourcesSpawnPoints.GetChild(randomIndex);
+            if (randomPoint.TryGetComponent(out FruitTrigger trigger))
+            {
+                FruitResource fruit = Instantiate(_fruitPrefab, randomPoint.position, Quaternion.identity);
+                if (fruit != null)
+                    trigger.SetFruit(fruit);
+            }
         }
     }
     

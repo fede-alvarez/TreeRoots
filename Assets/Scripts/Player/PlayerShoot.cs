@@ -40,6 +40,9 @@ public class PlayerShoot : MonoBehaviour
         if (!_shootMode && _actionPressed)
             ShootMode();
 
+        if (_fruits > 0 && _shootMode && _actionPressed)
+            Shoot();
+
         CalculateTrajectory();
     }
 

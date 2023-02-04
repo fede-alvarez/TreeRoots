@@ -496,6 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourcesSpawnPoints: {fileID: 2922460}
+  _fruitPrefab: {fileID: 5568523192863243686, guid: 7542266c71f634235bea17dfd40a2a76, type: 3}
   _enemySpawnPoints: {fileID: 548189356}
 --- !u!4 &210757200
 Transform:
