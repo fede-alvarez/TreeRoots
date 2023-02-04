@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,7 +7,7 @@ public class EnemyManager : MonoBehaviour
     private readonly float secondsBetweenEnemies = 0.7F;
 
     [SerializeField]
-    private GameObject Enemy;
+    private SimpleEnemy Enemy;
 
     [SerializeField]
     private Transform EnemySpawnPoints;
@@ -16,15 +15,16 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private EnemyWavesScriptable EnemyWaves;
 
-    private ObjectPool<GameObject> Enemies;
+    private ObjectPool<SimpleEnemy> enemies;
 
     void Start()
     {
-        Enemies = new ObjectPool<GameObject>(InstantiateEnemy);
+        enemies = new ObjectPool<SimpleEnemy>(InstantiateEnemy);
+        EventManager.EnemyDied += OnEnemyDied;
         StartCoroutine("SpawnEnemyWaves");
     }
 
-    GameObject InstantiateEnemy()
+    SimpleEnemy InstantiateEnemy()
     {
         return Instantiate(Enemy, transform.position, Quaternion.identity);
     }
@@ -37,13 +37,18 @@ public class EnemyManager : MonoBehaviour
             {
                 for (int j = 0; j < wave.EnemiesFromSpawnPoints[i]; j += 1)
                 {
-                    GameObject enemy = Enemies.Get();
-                    enemy.transform.position = EnemySpawnPoints.GetChild(i).position;
-                    enemy.SetActive(true);
+                    var enemy = enemies.Get();
+                    enemy.ConfigureFor(EnemySpawnPoints.GetChild(i).position);
                     yield return new WaitForSeconds(secondsBetweenEnemies);
                 }
             }
             yield return new WaitForSeconds(wave.WaitForNextWave);
         }
+    }
+
+    void OnEnemyDied(SimpleEnemy enemy)
+    {
+        enemy.gameObject.SetActive(false);
+        enemies.Release(enemy);
     }
 }

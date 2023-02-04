@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SimpleEnemy : MonoBehaviour
@@ -19,14 +20,16 @@ public class SimpleEnemy : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    public void ConfigureFor(Vector3 position)
     {
-        rigidBody.velocity = new Vector2(shouldMoveLeft() ? speed : -speed, 0);
+        gameObject.SetActive(true);
+        transform.position = position;
+        rigidBody.velocity = new Vector2(position.x < 0 ? speed : -speed, 0);
     }
 
-    private bool shouldMoveLeft()
+    private void OnEnable()
     {
-        return transform.position.x < 0;
+        StartCoroutine("Death");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -39,6 +42,12 @@ public class SimpleEnemy : MonoBehaviour
             InvokeRepeating("Attack", 0, attackRate);
             isAttacking = true;
         }
+    }
+
+    private IEnumerator Death()
+    {
+        yield return new WaitForSeconds(4);
+        EventManager.OnEnemyDied (this);
     }
 
     private void Attack()
