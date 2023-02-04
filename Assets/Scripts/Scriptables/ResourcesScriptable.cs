@@ -7,7 +7,8 @@ public class ResourcesScriptable : ScriptableObject
     public List<FruitSpawnRate> _spawnRates;
 }
 
+[System.Serializable]
 public class FruitSpawnRate 
 {
-    
+    public float TimeToGrow;
 }
