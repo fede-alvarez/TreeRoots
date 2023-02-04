@@ -490,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resourcesSpawnPoints: {fileID: 2922460}
+  _fruitPrefab: {fileID: 0}
 --- !u!4 &210757200
 Transform:
   m_ObjectHideFlags: 0
@@ -518,9 +519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 8812613452186209962, guid: d4c3be910f6ad441ab40a0f98ab70b4a, type: 3}
-  Water: {fileID: 8932740543655936115, guid: 1d0c4e2f36486440da878d7481d093a4, type: 3}
   EnemySpawnPoints: {fileID: 548189356}
   EnemyWaves: {fileID: 11400000, guid: 5fc65801cc7474c8a8a93dec44bc4e80, type: 2}
+  Water: {fileID: 8932740543655936115, guid: 1d0c4e2f36486440da878d7481d093a4, type: 3}
 --- !u!1001 &253055920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2092,7 +2093,7 @@ GameObject:
   - component: {fileID: 1544879153}
   - component: {fileID: 1544879155}
   - component: {fileID: 1544879154}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2138,7 +2139,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.85, y: 0.85}
   m_EdgeRadius: 0
 --- !u!212 &1544879155
 SpriteRenderer:
