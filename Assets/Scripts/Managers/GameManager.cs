@@ -4,6 +4,9 @@ public class GameManager : MonoBehaviour
 {
     [Header("Fruit Resources")]
     [SerializeField] private Transform _resourcesSpawnPoints;
+
+    [Header("Enemies Spawn Points")]
+    [SerializeField] private Transform _enemySpawnPoints;
     private int _spawnPointsAmount;
 
     private static GameManager _instance;

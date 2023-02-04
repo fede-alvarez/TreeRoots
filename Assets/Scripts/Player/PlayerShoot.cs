@@ -18,9 +18,12 @@ public class PlayerShoot : MonoBehaviour
     private bool _shootMode = false;
     private bool _actionPressed = false;
 
+    private PlayerInput _input;
+
     private void Awake() 
     {
         _controller = GetComponent<PlayerController>();
+        _input = GetComponent<PlayerInput>();
     }
 
     private void Start() 
@@ -31,15 +34,15 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update() 
     {
-        _horizontalMovement = Input.GetAxisRaw("Horizontal");
-        _actionPressed = Input.GetKeyDown(KeyCode.E);
+        _horizontalMovement = _input.GetMovement;
+        _actionPressed = _input.GetInteraction;
         
         if (!_shootMode && _actionPressed)
             ShootMode();
 
         CalculateTrajectory();
 
-        if (Input.GetButtonDown("Jump") && _shootMode)
+        if (_input.GetJump && _shootMode)
         {
             Shoot();
             Invoke("NormalMode", 0.5f);
@@ -50,13 +53,24 @@ public class PlayerShoot : MonoBehaviour
     {
         if (!_shootMode) return;
 
+        bool isTopPlayer = _controller.GetPlayerType == PlayerController.PlayerType.TopTree;
+
         if (_horizontalMovement > 0)
             _rotation += _rotationSpeed * Time.deltaTime;
         else if (_horizontalMovement < 0)
             _rotation -= _rotationSpeed * Time.deltaTime;
 
+        
+        
         _rotation = Mathf.Clamp(_rotation, -_maxRotationAngle, _maxRotationAngle);
-        _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, _rotation);
+
+        if (!isTopPlayer)
+        {
+            _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, -_rotation);    
+        }else{
+            _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, _rotation);
+        }
+        
     }
 
     private void Shoot()

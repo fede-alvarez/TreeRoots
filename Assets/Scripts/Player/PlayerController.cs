@@ -21,19 +21,22 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _disableMovement = false;
 
+    private PlayerInput _input;
+
     private void Awake() 
     {
         _rb = GetComponent<Rigidbody2D>();
+        _input = GetComponent<PlayerInput>();
     }
 
     private void Update() 
     {
         GroundCheck();
         
-        _movement = Input.GetAxis("Horizontal");
+        _movement = _input.GetMovement;
 
         // Jump Handling
-        bool jumpPressed = Input.GetButtonDown("Jump");
+        bool jumpPressed = _input.GetJump;
 
         if (jumpPressed && _isGrounded)
             _desiredJump = true;
@@ -72,4 +75,6 @@ public class PlayerController : MonoBehaviour
     {
         set { _disableMovement = value; }
     }
+
+    public PlayerType GetPlayerType => _type;
 }
