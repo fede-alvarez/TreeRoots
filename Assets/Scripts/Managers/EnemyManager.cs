@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -17,16 +18,22 @@ public class EnemyManager : MonoBehaviour
 
     private ObjectPool<SimpleEnemy> enemies;
 
+    [SerializeField]
+    private Water Water;
+
+    private ObjectPool<Water> waters;
+
     void Start()
     {
-        enemies = new ObjectPool<SimpleEnemy>(InstantiateEnemy);
+        enemies = new ObjectPool<SimpleEnemy>(InstantiatePrefab<SimpleEnemy>(Enemy));
+        waters = new ObjectPool<Water>(InstantiatePrefab<Water>(Water));
         EventManager.EnemyDied += OnEnemyDied;
         StartCoroutine("SpawnEnemyWaves");
     }
 
-    SimpleEnemy InstantiateEnemy()
+    Func<T> InstantiatePrefab<T>(T prefab) where T : Component
     {
-        return Instantiate(Enemy, transform.position, Quaternion.identity);
+        return () => Instantiate(prefab, transform.position, Quaternion.identity);
     }
 
     IEnumerator SpawnEnemyWaves()
@@ -37,8 +44,7 @@ public class EnemyManager : MonoBehaviour
             {
                 for (int j = 0; j < wave.EnemiesFromSpawnPoints[i]; j += 1)
                 {
-                    var enemy = enemies.Get();
-                    enemy.ConfigureFor(EnemySpawnPoints.GetChild(i).position);
+                    enemies.Get().ConfigureFor(EnemySpawnPoints.GetChild(i).position);
                     yield return new WaitForSeconds(secondsBetweenEnemies);
                 }
             }
@@ -48,7 +54,8 @@ public class EnemyManager : MonoBehaviour
 
     void OnEnemyDied(SimpleEnemy enemy)
     {
+        waters.Get().ConfigureFor(enemy.transform.position);
         enemy.gameObject.SetActive(false);
-        enemies.Release(enemy);
+        enemies.Release (enemy);
     }
 }
