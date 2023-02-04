@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 5;
     [SerializeField] private float _jumpForce = 5;
 
+    [Header("Animations")]
+    [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Animator _animator;
+
     private float _movement;
     private bool _desiredJump = false;
     private bool _isGrounded = false;
@@ -35,8 +39,17 @@ public class PlayerController : MonoBehaviour
     {
         GroundCheck();
         SlopeCheck();
+
         _movement = _input.GetMovement;
 
+        // Flip sprite
+        if (_movement > 0)
+            _renderer.flipX = false;
+        else if (_movement < 0)
+             _renderer.flipX = true;
+
+        _animator.SetBool("Walking", (_rb.velocity.magnitude > 0.1f) ? true : false);
+        
         // Jump Handling
         bool jumpPressed = _input.GetJump;
 
@@ -76,9 +89,12 @@ public class PlayerController : MonoBehaviour
         {
             if (Mathf.Abs(hit.normal.x) > 0.1f)//(hit.normal.y < 0.9f && _rb.velocity.magnitude < 1)
             {
-                _rb.velocity = new Vector2(_rb.velocity.x - (hit.normal.x * 0.5f), _rb.velocity.y);
+                _rb.velocity = new Vector2(_rb.velocity.x - (hit.normal.x * 0.1f), _rb.velocity.y);
+
+                Vector3 pos = transform.position;
+                pos.y += -hit.normal.x * Mathf.Abs(_rb.velocity.x) * Time.deltaTime * (_rb.velocity.x - hit.normal.x > 0 ? 1 : -1);
+                transform.position = pos;
             }
-            //print("Slope");
         }
     }
 
@@ -94,4 +110,6 @@ public class PlayerController : MonoBehaviour
     }
 
     public PlayerType GetPlayerType => _type;
+
+    public bool IsTopPlayer => _type == PlayerType.TopTree;
 }

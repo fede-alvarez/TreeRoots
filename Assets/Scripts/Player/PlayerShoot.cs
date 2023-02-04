@@ -41,12 +41,6 @@ public class PlayerShoot : MonoBehaviour
             ShootMode();
 
         CalculateTrajectory();
-
-        if (_input.GetJump && _shootMode)
-        {
-            Shoot();
-            Invoke("NormalMode", 0.5f);
-        }
     }
 
     private void CalculateTrajectory()
@@ -60,8 +54,6 @@ public class PlayerShoot : MonoBehaviour
         else if (_horizontalMovement < 0)
             _rotation -= _rotationSpeed * Time.deltaTime;
 
-        
-        
         _rotation = Mathf.Clamp(_rotation, -_maxRotationAngle, _maxRotationAngle);
 
         if (!isTopPlayer)
@@ -70,7 +62,6 @@ public class PlayerShoot : MonoBehaviour
         }else{
             _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, _rotation);
         }
-        
     }
 
     private void Shoot()

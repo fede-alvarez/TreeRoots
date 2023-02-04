@@ -31,5 +31,7 @@ public class PlayerInput : MonoBehaviour
 
     public float GetMovement => _playerMovement;
     public bool GetJump => _playerJump;
+
+    public bool GetReleaseInteraction => Input.GetKeyUp(_actionKey);
     public bool GetInteraction => _playerInteraction;
 }
