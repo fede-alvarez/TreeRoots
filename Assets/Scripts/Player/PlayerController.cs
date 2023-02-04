@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _rayOffset = new Vector3(0, 0.32f);
     private Vector3 _raySize = new Vector3(0.3f, 0.1f);
 
+    private Vector3 _rayLineOffset = new Vector3(0, 0.2f);
+
     private Rigidbody2D _rb;
     private bool _disableMovement = false;
 
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Update() 
     {
         GroundCheck();
-        
+        SlopeCheck();
         _movement = _input.GetMovement;
 
         // Jump Handling
@@ -63,6 +65,21 @@ public class PlayerController : MonoBehaviour
     {
         // Check if grounded
         _isGrounded = Physics2D.OverlapBox(transform.position - _rayOffset, _raySize, 0);
+    }
+
+    private void SlopeCheck()
+    {
+        Debug.DrawRay(transform.position - _rayLineOffset, -transform.up * 0.2f, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - _rayLineOffset,  -transform.up, 0.2f);
+
+        if (hit.collider != null)
+        {
+            if (Mathf.Abs(hit.normal.x) > 0.1f)//(hit.normal.y < 0.9f && _rb.velocity.magnitude < 1)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x - (hit.normal.x * 0.5f), _rb.velocity.y);
+            }
+            //print("Slope");
+        }
     }
 
     private void OnDrawGizmos() 
