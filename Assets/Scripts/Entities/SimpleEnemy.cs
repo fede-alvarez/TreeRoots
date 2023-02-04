@@ -27,11 +27,6 @@ public class SimpleEnemy : MonoBehaviour
         rigidBody.velocity = new Vector2(position.x < 0 ? speed : -speed, 0);
     }
 
-    private void OnEnable()
-    {
-        StartCoroutine("Death");
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Tree") || isAttacking) return;
@@ -42,12 +37,6 @@ public class SimpleEnemy : MonoBehaviour
             InvokeRepeating("Attack", 0, attackRate);
             isAttacking = true;
         }
-    }
-
-    private IEnumerator Death()
-    {
-        yield return new WaitForSeconds(4);
-        EventManager.OnEnemyDied (this);
     }
 
     private void Attack()
