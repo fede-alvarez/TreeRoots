@@ -6,6 +6,17 @@ public class FruitTrigger : MonoBehaviour
     [SerializeField] private CanvasGroup _group;
     private bool _hasFruit = false;
     private FruitResource _fruit;
+    private PlayerController _player;
+
+    private void Start() 
+    {
+        _player = GameManager.GetInstance.GetPlayer;    
+    }
+
+    private void Update() 
+    {
+        
+    }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
@@ -27,6 +38,8 @@ public class FruitTrigger : MonoBehaviour
 
     public void RemoveFruit()
     {
+        _fruit.Remove();
+
         _fruit = null;
         _hasFruit = false;
     }

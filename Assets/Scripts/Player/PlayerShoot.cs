@@ -16,6 +16,7 @@ public class PlayerShoot : MonoBehaviour
     private int _fruits = 0;
     private float _rotation = 0;
     private bool _shootMode = false;
+    private bool _canShoot = false;
     private bool _actionPressed = false;
 
     private PlayerInput _input;
@@ -37,6 +38,8 @@ public class PlayerShoot : MonoBehaviour
         _horizontalMovement = _input.GetMovement;
         _actionPressed = _input.GetInteraction;
         
+        if (!_canShoot) return;
+
         if (!_shootMode && _actionPressed)
             ShootMode();
 

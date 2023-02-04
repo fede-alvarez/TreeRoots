@@ -28,11 +28,13 @@ public class PlayerController : MonoBehaviour
     private bool _disableMovement = false;
 
     private PlayerInput _input;
+    private PlayerShoot _shoot;
 
     private void Awake() 
     {
         _rb = GetComponent<Rigidbody2D>();
         _input = GetComponent<PlayerInput>();
+        _shoot = GetComponent<PlayerShoot>();
     }
 
     private void Update() 

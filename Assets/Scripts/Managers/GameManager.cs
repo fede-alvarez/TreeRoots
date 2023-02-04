@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _resourcesSpawnPoints;
     [SerializeField] private FruitResource _fruitPrefab;
 
+    [Header("Player")]
+    [SerializeField] private PlayerController _playerController;
+
     private int _spawnPointsAmount;
+    private int _prevRandIndex = 0;
 
     private static GameManager _instance;
     
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
     private void Start() 
     {
         HideResourcesSpawn();
+        GenerateRandomResources();
     }
 
     private void HideResourcesSpawn()
@@ -34,11 +39,23 @@ public class GameManager : MonoBehaviour
             if (spawn.TryGetComponent(out SpriteRenderer render))
                 render.enabled = false;
         }
+    }
 
-        for (int i = 0; i < 3; i++)
+    private void GenerateRandomResources()
+    {
+        int random = Random.Range(2, 5);
+        for (int i = 0; i < random; i++)
         {
             int randomIndex = Random.Range(0, _resourcesSpawnPoints.childCount);
+
+            while(_prevRandIndex == randomIndex)
+            {
+                randomIndex = Random.Range(0, _resourcesSpawnPoints.childCount);
+            }
+            
             Transform randomPoint = _resourcesSpawnPoints.GetChild(randomIndex);
+            _prevRandIndex = randomIndex;
+
             if (randomPoint.TryGetComponent(out FruitTrigger trigger))
             {
                 FruitResource fruit = Instantiate(_fruitPrefab, randomPoint.position, Quaternion.identity);
@@ -53,5 +70,6 @@ public class GameManager : MonoBehaviour
         if (_instance != null) _instance = null;
     }
     
+    public PlayerController GetPlayer => _playerController;
     public static GameManager GetInstance => _instance;
 }
