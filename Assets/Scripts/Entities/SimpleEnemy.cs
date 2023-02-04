@@ -2,37 +2,47 @@ using UnityEngine;
 
 public class SimpleEnemy : MonoBehaviour
 {
-    private int _attackPower = 1;
-    private float _attackRate = 1.5f;
-    private bool _isAttacking = false;
+    private readonly int attackPower = 1;
 
-    private Tree _tree;
-    private Rigidbody2D _rb;
+    private readonly float attackRate = 1.5f;
 
-    private void Awake() 
+    private readonly float speed = 1f;
+
+    private bool isAttacking = false;
+
+    private Tree tree;
+
+    private Rigidbody2D rigidBody;
+
+    private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    private void Start() 
+    private void Start()
     {
-        _rb.velocity = new Vector2(-1, 0);
+        rigidBody.velocity = new Vector2(shouldMoveLeft() ? speed : -speed, 0);
+    }
+
+    private bool shouldMoveLeft()
+    {
+        return transform.position.x < 0;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Tree") || isAttacking) return;
+        if (other.TryGetComponent(out Tree tree))
+        {
+            this.tree = tree;
+            rigidBody.velocity = Vector2.zero;
+            InvokeRepeating("Attack", 0, attackRate);
+            isAttacking = true;
+        }
     }
 
     private void Attack()
     {
-        _tree.Damage(_attackPower);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other) 
-    {
-        if (!other.CompareTag("Tree") || _isAttacking) return;
-        if (other.TryGetComponent(out Tree tree))
-        {
-            _tree = tree;
-            _rb.velocity = Vector2.zero;
-            InvokeRepeating("Attack", 0, _attackRate);
-            _isAttacking = true;
-        }
+        tree.Damage (attackPower);
     }
 }

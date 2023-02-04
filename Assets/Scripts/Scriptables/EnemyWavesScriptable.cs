@@ -1,17 +1,23 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyRates", menuName = "GGJ/Enemies Spawn Rates", order = 0)]
-public class EnemyWavesScriptable : ScriptableObject 
+[
+    CreateAssetMenu(
+        fileName = "EnemyRates",
+        menuName = "GGJ/Enemies Spawn Rates",
+        order = 0)
+]
+public class EnemyWavesScriptable : ScriptableObject
 {
-    public List<EnemySpawnRate> _spawnRates;
+    public List<Wave> Waves;
 }
 
 [System.Serializable]
-public class EnemySpawnRate 
+public class Wave
 {
-    public string Round = "Round 1";
-    public int EnemiesFromLeft = 1;
-    public int EnemiesFromRight = 1;
+    public string Name = "Round 1";
+
+    public int[] EnemiesFromSpawnPoints = { 1, 1 };
+
     public float WaitForNextWave = 1f;
 }

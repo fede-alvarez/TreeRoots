@@ -12,12 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55556fbdae6014d89a1fd5bd2049deb4, type: 3}
   m_Name: EnemyRates
   m_EditorClassIdentifier: 
-  _spawnRates:
-  - Round: Wave 1
-    EnemiesFromLeft: 2
-    EnemiesFromRight: 2
+  Waves:
+  - Name: Round 1
+    EnemiesFromSpawnPoints: 0200000002000000
+    WaitForNextWave: 20
+  - Name: Round 2
+    EnemiesFromSpawnPoints: 0500000005000000
     WaitForNextWave: 10
-  - Round: Wave 2
-    EnemiesFromLeft: 5
-    EnemiesFromRight: 5
-    WaitForNextWave: 15
