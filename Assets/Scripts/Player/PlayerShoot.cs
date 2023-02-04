@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private Transform _trajectoryPivot;
 
     [Header("Trajectory properties")]
+    [SerializeField] private Transform _fruitBulletPrefab;
     [SerializeField] private float _rotationSpeed = 0.1f;
     [SerializeField] private float _maxRotationAngle = 50f;
     private PlayerController _controller;
@@ -15,6 +16,7 @@ public class PlayerShoot : MonoBehaviour
     private int _fruits = 0;
     private float _rotation = 0;
     private bool _shootMode = false;
+    private bool _actionPressed = false;
 
     private void Awake() 
     {
@@ -30,13 +32,18 @@ public class PlayerShoot : MonoBehaviour
     private void Update() 
     {
         _horizontalMovement = Input.GetAxisRaw("Horizontal");
-
-        bool eKeyPressed = Input.GetKeyDown(KeyCode.E);
-
-        if (!_shootMode && eKeyPressed)
-            Shoot();
+        _actionPressed = Input.GetKeyDown(KeyCode.E);
+        
+        if (!_shootMode && _actionPressed)
+            ShootMode();
 
         CalculateTrajectory();
+
+        if (Input.GetButtonDown("Jump") && _shootMode)
+        {
+            Shoot();
+            Invoke("NormalMode", 0.5f);
+        }
     }
 
     private void CalculateTrajectory()
@@ -54,7 +61,17 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        print("Shoot Mode");
+        print("Shoot!");
+        Transform bullet = Instantiate(_fruitBulletPrefab, transform.position, Quaternion.identity);
+        if (!bullet) return;
+        if (bullet.TryGetComponent(out FruitBullet bulletFruit))
+        {
+            bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
+        }
+    }
+
+    private void ShootMode()
+    {
         _shootMode = true;
         _controller.DisableMovement = true;
         _trajectoryLine.gameObject.SetActive(true);
@@ -62,7 +79,6 @@ public class PlayerShoot : MonoBehaviour
 
     private void NormalMode()
     {
-        print("Normal Mode");
         _shootMode = false;
         _controller.DisableMovement = false;
         _trajectoryLine.gameObject.SetActive(false);

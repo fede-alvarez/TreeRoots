@@ -30,9 +30,8 @@ public class PlayerController : MonoBehaviour
     {
         // Check if grounded
         _isGrounded = Physics2D.OverlapBox(transform.position - _rayOffset, _raySize, 0);
-
-        if (!_disableMovement)
-            _movement = Input.GetAxis("Horizontal");
+        
+        _movement = Input.GetAxis("Horizontal");
 
         // Jump Handling
         bool jumpPressed = Input.GetButtonDown("Jump");
@@ -43,6 +42,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_disableMovement) 
+        {
+            _rb.velocity = Vector2.zero;
+            return;
+        }
+
         _rb.velocity = new Vector2(_movement * _speed, _rb.velocity.y);
 
         if (_desiredJump)
