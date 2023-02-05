@@ -21,6 +21,7 @@ public class PlayerShoot : MonoBehaviour
     private bool _shootMode = false;
     private bool _canShoot = false;
     private bool _actionPressed = false;
+    private bool _isDelayed = false;
 
     private PlayerInput _input;
 
@@ -41,17 +42,15 @@ public class PlayerShoot : MonoBehaviour
         _horizontalMovement = _input.GetMovement;
         _actionPressed = _input.GetInteraction;
         
-        if (!_canShoot) return;
-
-        if (!_shootMode && _actionPressed)
-            ShootMode();
-
-        if (_fruits > 0 && _shootMode && _actionPressed)
+        if (_isDelayed && _canShoot && _fruits > 0 && _actionPressed)
         {
             _canShoot = false;
+            _isDelayed = false;
             Shoot();
+            NormalMode();
         }
 
+        if (!_canShoot) return;
         CalculateTrajectory();
     }
 
@@ -79,14 +78,11 @@ public class PlayerShoot : MonoBehaviour
     public void Shoot()
     {
         if (_fruits <= 0) return;
-        print("SHOOOOOOOOOOOOOTTTTTTTT!");
 
         Transform bullet = Instantiate(_fruitBulletPrefab, transform.position, Quaternion.identity);
         if (!bullet) return;
         if (bullet.TryGetComponent(out FruitBullet bulletFruit))
         {
-
-            print("HELLO AMIGOU");
             bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
             _fruits -= 1;
         }
@@ -94,10 +90,18 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootMode()
     {
+        print("In shoot mode!");
         _handsFilled.SetActive(true);
         _shootMode = true;
         _controller.DisableMovement = true;
         _trajectoryLine.gameObject.SetActive(true);
+
+        Invoke("SetDelay", 1.0f);
+    }
+
+    private void SetDelay()
+    {
+        _isDelayed = true;
     }
 
     private void NormalMode()
@@ -117,7 +121,10 @@ public class PlayerShoot : MonoBehaviour
     public bool CanShoot
     {
         get { return _canShoot; }
-        set { _canShoot = value; }
+        set {
+            if (value) ShootMode();
+            _canShoot = value;
+        }
     }
 
     private void OnDestroy() 

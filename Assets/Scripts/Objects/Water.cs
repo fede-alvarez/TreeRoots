@@ -29,7 +29,14 @@ public class Water : MonoBehaviour
                 targetPosition, speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        EventManager.OnWaterCollected(other.gameObject.GetComponent<PlayerController>(), this);
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (!other.CompareTag("Player")) return;
+
+        if (other.TryGetComponent(out PlayerController player))
+        {
+            player.HasWater = true;
+            EventManager.OnWaterCollected(other.gameObject.GetComponent<PlayerController>(), this);
+        }
     }
 }

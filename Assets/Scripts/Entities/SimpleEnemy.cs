@@ -39,6 +39,11 @@ public class SimpleEnemy : MonoBehaviour
         //StartCoroutine("Death");
     }
 
+    public void Die()
+    {
+        EventManager.OnEnemyDied (this);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Tree") || isAttacking) return;

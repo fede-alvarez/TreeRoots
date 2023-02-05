@@ -18,7 +18,7 @@ public class FruitTrigger : MonoBehaviour
             _group.DOFade(0, 1.0f);
 
             EventManager.OnFruitCollected();
-            _fruit.Remove();
+            RemoveFruit();
 
             _player.CanShoot = true;
         }    

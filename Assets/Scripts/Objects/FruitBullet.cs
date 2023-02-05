@@ -17,4 +17,15 @@ public class FruitBullet : MonoBehaviour
         Vector3 dir = (isTop) ? -transform.up : transform.right;
         _rb.AddForce(-transform.up * _bulletSpeed, ForceMode2D.Impulse);
     }
+
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        if (!other.collider.CompareTag("Enemy")) return;
+        //print(other.collider.name + " -> " +  other.collider.tag ); 
+        if (other.collider.TryGetComponent(out SimpleEnemy enemy))
+        {
+            enemy.Die();
+            Destroy(gameObject);
+        }
+    }
 }

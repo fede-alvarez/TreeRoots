@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private float _movement;
     private bool _desiredJump = false;
     private bool _isGrounded = false;
+
+    private bool _hasWater = false;
     
     private Vector3 _rayOffset = new Vector3(0, 0.32f);
     private Vector3 _raySize = new Vector3(0.3f, 0.1f);
@@ -132,6 +134,12 @@ public class PlayerController : MonoBehaviour
     {
         get { return _shoot.CanShoot; }
         set { _shoot.CanShoot = value; }
+    }
+
+    public bool HasWater
+    {
+        get { return _hasWater; }
+        set { _hasWater = value; }
     }
 
     public bool InteractionPressed
