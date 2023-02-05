@@ -4,6 +4,9 @@ using DG.Tweening;
 public class FruitTrigger : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _group;
+    [SerializeField] private int _waterDropIndex;
+    [SerializeField] private Transform _waterDropParent;
+
     private bool _hasFruit = false;
     private FruitResource _fruit;
     private PlayerController _player;
@@ -45,13 +48,22 @@ public class FruitTrigger : MonoBehaviour
     {
         _fruit = fruit;
         _hasFruit = true;
+
+        //SetDropState(false);
     }
 
     public void RemoveFruit()
     {
         _fruit.Remove();
 
+        SetDropState(true);
+
         _fruit = null;
         _hasFruit = false;
+    }
+
+    private void SetDropState(bool state)
+    {
+        _waterDropParent.GetChild(_waterDropIndex).gameObject.SetActive(state);
     }
 }
