@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
                     yield return new WaitForSeconds(UnityEngine.Random.Range(wave.MinWaitBetweenEnemies, wave.MaxWaitBetweenEnemies));
                 }
             }
-            yield return new WaitForSeconds(wave.WaitForNextWave);
+            yield return new WaitForSeconds(wave.WaitForNextWave * 3);
         }
     }
 

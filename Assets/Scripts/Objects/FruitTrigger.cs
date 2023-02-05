@@ -8,25 +8,20 @@ public class FruitTrigger : MonoBehaviour
     private FruitResource _fruit;
     private PlayerController _player;
 
-    private void Start() 
-    {
-        _player = GameManager.GetInstance.GetPlayer;    
-    }
-
-    private void Update() 
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (!other.CompareTag("Player")) return;
+        if (other.TryGetComponent(out PlayerController controller))
+            _player = controller;
+        
         _group.DOFade(1, 1.0f);
     }
 
-    private void OnTriggerExit2D(Collider2D other) 
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (_player != null) _player = null;
+
         _group.DOFade(0, 1.0f);
     }
 

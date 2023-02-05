@@ -19,7 +19,7 @@ public class GameOverUI : MonoBehaviour
     {
         _group.DOFade(1, 2.0f).OnComplete(() => 
         {
-            print("Back to Menu");
+            LevelLoader.GetInstance.GoMenu();
         });
     }
 

@@ -14,10 +14,16 @@ public class SimpleEnemy : MonoBehaviour
     private Tree tree;
 
     private Rigidbody2D rigidBody;
+    [SerializeField] private SpriteRenderer render;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start() 
+    {
+        render.flipX = (transform.position.x > 0) ? true : false;
     }
 
     public void ConfigureFor(Vector3 position)

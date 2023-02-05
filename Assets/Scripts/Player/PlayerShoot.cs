@@ -102,6 +102,12 @@ public class PlayerShoot : MonoBehaviour
         _fruits += 1;
     }
 
+    public bool CanShoot
+    {
+        get { return _canShoot; }
+        set { _canShoot = value; }
+    }
+
     private void OnDestroy() 
     {
         EventManager.FruitCollected -= OnFruitCollected;

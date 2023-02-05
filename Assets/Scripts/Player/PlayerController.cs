@@ -126,6 +126,12 @@ public class PlayerController : MonoBehaviour
         set { _disableMovement = value; }
     }
 
+    public bool CanShoot
+    {
+        get { return _shoot.CanShoot; }
+        set { _shoot.CanShoot = value; }
+    }
+
     public PlayerType GetPlayerType => _type;
 
     public bool IsTopPlayer => _type == PlayerType.TopTree;
