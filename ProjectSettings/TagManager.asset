@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tree
+  - Drop
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - BottomFloor
   - PostPro
   - Elevators
-  - 
+  - Tree
   - 
   - 
   - 
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3998809045
+    locked: 0
+  - name: UI
+    uniqueID: 2113864987
     locked: 0

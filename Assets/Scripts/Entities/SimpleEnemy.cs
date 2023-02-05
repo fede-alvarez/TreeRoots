@@ -15,6 +15,7 @@ public class SimpleEnemy : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     [SerializeField] private SpriteRenderer render;
+    [SerializeField] private Animator _animator;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class SimpleEnemy : MonoBehaviour
         {
             this.tree = tree;
             rigidBody.velocity = Vector2.zero;
+            _animator.SetBool("Attack", true);
             InvokeRepeating("Attack", 0, attackRate);
             isAttacking = true;
         }
