@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] private PlayerController _playerController;
 
+    [Header("Elevators")]
+    [SerializeField] private float _elevatorsTimer = 5.0f;
+    [SerializeField] private Elevator _elevatorLeft;
+    [SerializeField] private Elevator _elevatorRight;
+
     private int _spawnPointsAmount;
     private int _prevRandIndex = 0;
 
@@ -28,6 +33,14 @@ public class GameManager : MonoBehaviour
     {
         HideResourcesSpawn();
         GenerateRandomResources();
+
+        InvokeRepeating("StartElevators", 4.0f, _elevatorsTimer);
+    }
+
+    private void StartElevators()
+    {
+        _elevatorLeft.Move();
+        _elevatorRight.Move();
     }
 
     private void HideResourcesSpawn()

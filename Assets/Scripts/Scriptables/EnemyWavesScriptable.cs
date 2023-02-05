@@ -19,5 +19,8 @@ public class Wave
 
     public int[] EnemiesFromSpawnPoints = { 1, 1 };
 
+    public float MinWaitBetweenEnemies = 3.0f;
+    public float MaxWaitBetweenEnemies = 6.0f;
+
     public float WaitForNextWave = 1f;
 }

@@ -7,7 +7,7 @@ public class SimpleEnemy : MonoBehaviour
 
     private readonly float attackRate = 1.5f;
 
-    private readonly float speed = 1f;
+    private readonly float speed = .5f;
 
     private bool isAttacking = false;
 
@@ -29,7 +29,7 @@ public class SimpleEnemy : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine("Death");
+        //StartCoroutine("Death");
     }
 
     private void OnTriggerEnter2D(Collider2D other)

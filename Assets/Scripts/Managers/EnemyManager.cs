@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
                 for (int j = 0; j < wave.EnemiesFromSpawnPoints[i]; j += 1)
                 {
                     enemies.Get().ConfigureFor(EnemySpawnPoints.GetChild(i).position);
-                    yield return new WaitForSeconds(secondsBetweenEnemies);
+                    yield return new WaitForSeconds(UnityEngine.Random.Range(wave.MinWaitBetweenEnemies, wave.MaxWaitBetweenEnemies));
                 }
             }
             yield return new WaitForSeconds(wave.WaitForNextWave);

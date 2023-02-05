@@ -100,6 +100,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void DisablePhysics(Transform parent)
+    {
+        transform.SetParent(parent);
+        this.enabled = false;
+        _rb.bodyType = RigidbodyType2D.Kinematic;
+        _rb.velocity = Vector2.zero;
+    }
+
+    public void EnablePhysics(Transform parent)
+    {
+        transform.SetParent(parent);
+        this.enabled = true;
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+    }
+
     private void OnDrawGizmos() 
     {
         Gizmos.color = Color.red;
