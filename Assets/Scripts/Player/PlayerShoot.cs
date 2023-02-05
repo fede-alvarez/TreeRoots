@@ -10,7 +10,10 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private Transform _fruitBulletPrefab;
     [SerializeField] private float _rotationSpeed = 0.1f;
     [SerializeField] private float _maxRotationAngle = 50f;
+
+    [SerializeField] private GameObject _handsFilled;
     private PlayerController _controller;
+
     
     private float _horizontalMovement;
     private int _fruits = 0;
@@ -44,7 +47,10 @@ public class PlayerShoot : MonoBehaviour
             ShootMode();
 
         if (_fruits > 0 && _shootMode && _actionPressed)
+        {
+            _canShoot = false;
             Shoot();
+        }
 
         CalculateTrajectory();
     }
@@ -70,14 +76,17 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         if (_fruits <= 0) return;
-        
+        print("SHOOOOOOOOOOOOOTTTTTTTT!");
+
         Transform bullet = Instantiate(_fruitBulletPrefab, transform.position, Quaternion.identity);
         if (!bullet) return;
         if (bullet.TryGetComponent(out FruitBullet bulletFruit))
         {
+
+            print("HELLO AMIGOU");
             bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
             _fruits -= 1;
         }
@@ -85,6 +94,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootMode()
     {
+        _handsFilled.SetActive(true);
         _shootMode = true;
         _controller.DisableMovement = true;
         _trajectoryLine.gameObject.SetActive(true);
@@ -92,6 +102,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void NormalMode()
     {
+        _handsFilled.SetActive(false);
         _shootMode = false;
         _controller.DisableMovement = false;
         _trajectoryLine.gameObject.SetActive(false);
@@ -99,6 +110,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void OnFruitCollected()
     {
+        print("Fruit collected!");
         _fruits += 1;
     }
 

@@ -106,6 +106,8 @@ public class PlayerController : MonoBehaviour
         this.enabled = false;
         _rb.bodyType = RigidbodyType2D.Kinematic;
         _rb.velocity = Vector2.zero;
+
+        _animator.SetBool("Walking", false);
     }
 
     public void EnablePhysics(Transform parent)
@@ -130,6 +132,11 @@ public class PlayerController : MonoBehaviour
     {
         get { return _shoot.CanShoot; }
         set { _shoot.CanShoot = value; }
+    }
+
+    public bool InteractionPressed
+    {
+        get { return _input.GetInteraction; }
     }
 
     public PlayerType GetPlayerType => _type;

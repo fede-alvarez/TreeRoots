@@ -8,6 +8,23 @@ public class FruitTrigger : MonoBehaviour
     private FruitResource _fruit;
     private PlayerController _player;
 
+    private void Update() 
+    {
+        if (!_hasFruit) return;
+
+        if (_player != null && _player.InteractionPressed)
+        {
+            print("Player Interacted!");
+            _group.DOFade(0, 1.0f);
+
+            EventManager.OnFruitCollected();
+            _fruit.Remove();
+
+            _player.CanShoot = true;
+        }    
+    }
+
+    
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (!other.CompareTag("Player")) return;
