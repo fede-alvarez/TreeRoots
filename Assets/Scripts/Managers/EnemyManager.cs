@@ -52,7 +52,6 @@ public class EnemyManager : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(wave.WaitForNextWave);
-            //print("Waited for Next Wave => " + wave.WaitForNextWave.ToString());
         }
     }
 
@@ -67,5 +66,11 @@ public class EnemyManager : MonoBehaviour
     {
         water.gameObject.SetActive(false);
         waters.Release (water);
+    }
+
+    private void OnDestroy() 
+    {
+        EventManager.EnemyDied -= OnEnemyDied;
+        EventManager.WaterCollected -= OnWaterCollected;
     }
 }
