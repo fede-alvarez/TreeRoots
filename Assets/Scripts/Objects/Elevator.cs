@@ -35,7 +35,8 @@ public class Elevator : MonoBehaviour
                  {
                     _isMoving = false;
                     isGoingUp = !isGoingUp;
-                    _controller.EnablePhysics(playerParent);
+                    if (_controller != null)
+                        _controller.EnablePhysics(playerParent);
                  });
     }
 }
