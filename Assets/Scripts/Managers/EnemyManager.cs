@@ -5,8 +5,6 @@ using UnityEngine.Pool;
 
 public class EnemyManager : MonoBehaviour
 {
-    private readonly float secondsBetweenEnemies = 0.7F;
-
     [SerializeField]
     private SimpleEnemy Enemy;
 
@@ -39,6 +37,8 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator SpawnEnemyWaves()
     {
+        yield return new WaitForSeconds(7);
+
         foreach (var wave in EnemyWaves.Waves)
         {
             for (int i = 0; i < wave.EnemiesFromSpawnPoints.Length; i += 1)
@@ -46,10 +46,13 @@ public class EnemyManager : MonoBehaviour
                 for (int j = 0; j < wave.EnemiesFromSpawnPoints[i]; j += 1)
                 {
                     enemies.Get().ConfigureFor(EnemySpawnPoints.GetChild(i).position);
-                    yield return new WaitForSeconds(UnityEngine.Random.Range(wave.MinWaitBetweenEnemies, wave.MaxWaitBetweenEnemies));
+
+                    float randomWait = UnityEngine.Random.Range(wave.MinWaitBetweenEnemies, wave.MaxWaitBetweenEnemies);
+                    yield return new WaitForSeconds(randomWait);
                 }
             }
-            yield return new WaitForSeconds(wave.WaitForNextWave * 3);
+            yield return new WaitForSeconds(wave.WaitForNextWave);
+            //print("Waited for Next Wave => " + wave.WaitForNextWave.ToString());
         }
     }
 

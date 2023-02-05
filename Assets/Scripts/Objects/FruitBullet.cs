@@ -20,12 +20,13 @@ public class FruitBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if (!other.collider.CompareTag("Enemy")) return;
+        //if (!other.collider.CompareTag("Enemy")) return;
         //print(other.collider.name + " -> " +  other.collider.tag ); 
         if (other.collider.TryGetComponent(out SimpleEnemy enemy))
         {
             enemy.Die();
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
 }

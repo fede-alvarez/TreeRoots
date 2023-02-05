@@ -6,8 +6,20 @@ public class WaterDrop : MonoBehaviour
     [SerializeField] private int _branchIndex;
     [SerializeField] private Transform _resourcesParent;
     [SerializeField] private FruitResource _fruitPrefab;
+
+    private PlayerController _player;
     
     private bool _hasWater = false;
+
+    private void Update() 
+    {
+        if (_player == null || !_player.HasWater) return;
+        if (_player.InteractionPressed)
+        {
+            CreateResource();
+            _player.HasWater = false;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
@@ -15,16 +27,20 @@ public class WaterDrop : MonoBehaviour
 
         if (other.TryGetComponent(out PlayerController player))
         {
+            _player = player;
             _hasWater = player.HasWater;
         }
+    }
 
+    private void CreateResource()
+    {
         Transform resource = _resourcesParent.GetChild(_branchIndex);
         if (resource == null) return;
         if (resource.TryGetComponent(out FruitTrigger fruit))
         {
-            FruitResource t = Instantiate(_fruitPrefab, resource.position, Quaternion.identity);
-            if (t == null) return;
-            //resource.ha
+            FruitResource f = Instantiate(_fruitPrefab, resource.position, Quaternion.identity);
+            if (f == null) return;
+            fruit.SetFruit(f);
         }
     }
 

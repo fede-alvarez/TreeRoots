@@ -56,22 +56,12 @@ public class GameManager : MonoBehaviour
 
     private void GenerateRandomResources()
     {
-        int random = Random.Range(2, 5);
-        for (int i = 0; i < random; i++)
+        for (int i = 0; i < _resourcesSpawnPoints.childCount; i++)
         {
-            int randomIndex = Random.Range(0, _resourcesSpawnPoints.childCount);
-
-            while(_prevRandIndex == randomIndex)
+            Transform child = _resourcesSpawnPoints.GetChild(i);
+            if (child.TryGetComponent(out FruitTrigger trigger))
             {
-                randomIndex = Random.Range(0, _resourcesSpawnPoints.childCount);
-            }
-            
-            Transform randomPoint = _resourcesSpawnPoints.GetChild(randomIndex);
-            _prevRandIndex = randomIndex;
-
-            if (randomPoint.TryGetComponent(out FruitTrigger trigger))
-            {
-                FruitResource fruit = Instantiate(_fruitPrefab, randomPoint.position, Quaternion.identity);
+                FruitResource fruit = Instantiate(_fruitPrefab, child.position, Quaternion.identity);
                 if (fruit != null)
                     trigger.SetFruit(fruit);
             }

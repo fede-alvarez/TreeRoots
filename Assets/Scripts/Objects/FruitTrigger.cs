@@ -14,7 +14,6 @@ public class FruitTrigger : MonoBehaviour
 
         if (_player != null && _player.InteractionPressed)
         {
-            print("Player Interacted!");
             _group.DOFade(0, 1.0f);
 
             EventManager.OnFruitCollected();

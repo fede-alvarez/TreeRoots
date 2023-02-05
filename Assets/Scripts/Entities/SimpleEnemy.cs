@@ -5,7 +5,7 @@ public class SimpleEnemy : MonoBehaviour
 {
     private readonly int attackPower = 1;
 
-    private readonly float attackRate = 1.5f;
+    private readonly float attackRate = 2.0f;
 
     private readonly float speed = .5f;
 
@@ -34,14 +34,10 @@ public class SimpleEnemy : MonoBehaviour
         rigidBody.velocity = new Vector2(position.x < 0 ? speed : -speed, 0);
     }
 
-    private void OnEnable()
-    {
-        //StartCoroutine("Death");
-    }
-
     public void Die()
     {
-        EventManager.OnEnemyDied (this);
+        CancelInvoke("Attack");
+        EventManager.OnEnemyDied(this);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -65,6 +61,7 @@ public class SimpleEnemy : MonoBehaviour
 
     private void Attack()
     {
-        tree.Damage (attackPower);
+        tree.Damage(attackPower);
+        EventManager.OnTreeDamaged(tree.GetHealth);
     }
 }

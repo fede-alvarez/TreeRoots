@@ -17,22 +17,22 @@ MonoBehaviour:
     EnemiesFromSpawnPoints: 0100000002000000
     MinWaitBetweenEnemies: 0.9
     MaxWaitBetweenEnemies: 1.1
-    WaitForNextWave: 4
+    WaitForNextWave: 15
   - Name: Wave 2
     EnemiesFromSpawnPoints: 0100000001000000
     MinWaitBetweenEnemies: 1.1
     MaxWaitBetweenEnemies: 1.3
-    WaitForNextWave: 0
+    WaitForNextWave: 15
   - Name: Wave 3
     EnemiesFromSpawnPoints: 0100000001000000
     MinWaitBetweenEnemies: 1.1
     MaxWaitBetweenEnemies: 1.3
-    WaitForNextWave: 0
+    WaitForNextWave: 5
   - Name: Wave 4
     EnemiesFromSpawnPoints: 0100000001000000
     MinWaitBetweenEnemies: 1.1
     MaxWaitBetweenEnemies: 1.3
-    WaitForNextWave: 10
+    WaitForNextWave: 15
   - Name: Wave 5
     EnemiesFromSpawnPoints: 0200000002000000
     MinWaitBetweenEnemies: 0.4

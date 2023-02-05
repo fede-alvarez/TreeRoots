@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
         if (_disableMovement) 
         {
             _rb.velocity = Vector2.zero;
+            //_rb.bodyType = RigidbodyType2D.Kinematic;
             return;
         }
 

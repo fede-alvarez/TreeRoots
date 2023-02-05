@@ -17,4 +17,6 @@ public class Tree : MonoBehaviour
             _isDead = true;
         }
     }
+
+    public int GetHealth => _health;
 }

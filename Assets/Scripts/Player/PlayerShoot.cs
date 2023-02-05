@@ -90,13 +90,12 @@ public class PlayerShoot : MonoBehaviour
 
     private void ShootMode()
     {
-        print("In shoot mode!");
         _handsFilled.SetActive(true);
         _shootMode = true;
         _controller.DisableMovement = true;
         _trajectoryLine.gameObject.SetActive(true);
 
-        Invoke("SetDelay", 1.0f);
+        Invoke("SetDelay", 0.5f);
     }
 
     private void SetDelay()
@@ -114,7 +113,6 @@ public class PlayerShoot : MonoBehaviour
 
     private void OnFruitCollected()
     {
-        print("Fruit collected!");
         _fruits += 1;
     }
 
