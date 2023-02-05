@@ -16,4 +16,8 @@ public class TreeExpressions : MonoBehaviour
     {
         animator.SetInteger("HealthPercentage", healthPercentage);
     }
+
+    private void OnDestroy() {
+        EventManager.TreeDamaged -= OnTreeDamaged;
+    }
 }
