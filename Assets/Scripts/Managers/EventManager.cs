@@ -12,7 +12,9 @@ public static class EventManager
 
     #region Enemies Related
     public static event UnityAction<SimpleEnemy> EnemyDied;
+    public static event UnityAction<PlayerController, Water> WaterCollected;
     public static void OnEnemyDied(SimpleEnemy enemy) => EnemyDied?.Invoke(enemy);
+    public static void OnWaterCollected(PlayerController player, Water water) => WaterCollected?.Invoke(player, water);
     #endregion
 
     #region General
