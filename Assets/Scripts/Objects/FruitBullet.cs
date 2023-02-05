@@ -22,6 +22,7 @@ public class FruitBullet : MonoBehaviour
     {
         //if (!other.collider.CompareTag("Enemy")) return;
         //print(other.collider.name + " -> " +  other.collider.tag ); 
+        AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ShootImpact);
         if (other.collider.TryGetComponent(out SimpleEnemy enemy))
         {
             enemy.Die();

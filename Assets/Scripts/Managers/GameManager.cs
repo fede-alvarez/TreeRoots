@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Elevator _elevatorRight;
+
+    [SerializeField]
+    private Transform _explosion;
 
     private int _spawnPointsAmount;
 
@@ -105,8 +109,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnEnemyDied(SimpleEnemy _)
+    private void OnEnemyDied(SimpleEnemy enemy)
     {
+        Transform explosion = Instantiate(_explosion, enemy.transform.position, Quaternion.identity); 
+        if (explosion != null)
+        {
+            explosion.localScale = new Vector2(0,0);
+            explosion.DOScale(new Vector2(0.8f, 0.8f), 0.5f).OnComplete(() => 
+            {
+                Destroy(explosion.gameObject, 0.1f);
+            });
+        }
         UpdateScore(score + enemyKillScore);
     }
 

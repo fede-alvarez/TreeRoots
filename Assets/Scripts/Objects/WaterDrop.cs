@@ -20,6 +20,7 @@ public class WaterDrop : MonoBehaviour
             _player.HasWater = false;
             //_resourcesParent.GetChild(_branchIndex).gameObject.SetActive(true);
             gameObject.SetActive(false);
+            AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ActivateRoot);
         }
     }
 
@@ -40,6 +41,8 @@ public class WaterDrop : MonoBehaviour
         if (resource == null) return;
         if (resource.TryGetComponent(out FruitTrigger fruit))
         {
+            AudioManager.GetInstance.PlaySound(AudioManager.AudioList.Spawn);
+
             FruitResource f = Instantiate(_fruitPrefab, resource.position, Quaternion.identity);
             if (f == null) return;
             fruit.SetFruit(f);

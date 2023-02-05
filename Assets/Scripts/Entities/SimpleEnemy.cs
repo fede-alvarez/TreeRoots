@@ -36,6 +36,7 @@ public class SimpleEnemy : MonoBehaviour
 
     public void Die()
     {
+        AudioManager.GetInstance.PlaySound(AudioManager.AudioList.DeadRabbit);
         CancelInvoke("Attack");
         EventManager.OnEnemyDied(this);
     }
@@ -51,12 +52,6 @@ public class SimpleEnemy : MonoBehaviour
             InvokeRepeating("Attack", 0, attackRate);
             isAttacking = true;
         }
-    }
-
-    private IEnumerator Death()
-    {
-        yield return new WaitForSeconds(4);
-        EventManager.OnEnemyDied(this);
     }
 
     private void Attack()

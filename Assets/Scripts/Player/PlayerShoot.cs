@@ -83,6 +83,7 @@ public class PlayerShoot : MonoBehaviour
         if (!bullet) return;
         if (bullet.TryGetComponent(out FruitBullet bulletFruit))
         {
+            AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ThrowFruite);
             bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
             _fruits -= 1;
         }

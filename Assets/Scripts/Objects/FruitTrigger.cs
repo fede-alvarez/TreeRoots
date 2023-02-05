@@ -19,6 +19,7 @@ public class FruitTrigger : MonoBehaviour
         {
             _group.DOFade(0, 1.0f);
 
+            AudioManager.GetInstance.PlaySound(AudioManager.AudioList.PickNutrients);
             EventManager.OnFruitCollected();
             RemoveFruit();
 
