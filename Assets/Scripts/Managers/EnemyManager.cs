@@ -28,6 +28,7 @@ public class EnemyManager : MonoBehaviour
         enemies = new ObjectPool<SimpleEnemy>(InstantiatePrefab<SimpleEnemy>(Enemy));
         waters = new ObjectPool<Water>(InstantiatePrefab<Water>(Water));
         EventManager.EnemyDied += OnEnemyDied;
+        EventManager.WaterCollected += OnWaterCollected;
         StartCoroutine("SpawnEnemyWaves");
     }
 
@@ -57,5 +58,11 @@ public class EnemyManager : MonoBehaviour
         waters.Get().ConfigureFor(enemy.transform.position);
         enemy.gameObject.SetActive(false);
         enemies.Release (enemy);
+    }
+
+    void OnWaterCollected(PlayerController player, Water water)
+    {
+        water.gameObject.SetActive(false);
+        waters.Release (water);
     }
 }

@@ -491,6 +491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourcesSpawnPoints: {fileID: 2922460}
   _fruitPrefab: {fileID: 0}
+  _playerController: {fileID: 0}
 --- !u!4 &210757200
 Transform:
   m_ObjectHideFlags: 0
@@ -515,13 +516,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 210757198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6f218d1541b048bca7cc50f800f101b, type: 3}
+  m_Script: {fileID: 11500000, guid: b4f6e15a4785fd64a9ecb26a20d1e43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy: {fileID: 8812613452186209962, guid: d4c3be910f6ad441ab40a0f98ab70b4a, type: 3}
   EnemySpawnPoints: {fileID: 548189356}
   EnemyWaves: {fileID: 11400000, guid: 5fc65801cc7474c8a8a93dec44bc4e80, type: 2}
-  Water: {fileID: 8932740543655936115, guid: 1d0c4e2f36486440da878d7481d093a4, type: 3}
+  Water: {fileID: 8932740543655936115, guid: cfb292066dc56e24eaa1a4de9b5cf297, type: 3}
 --- !u!1001 &253055920
 PrefabInstance:
   m_ObjectHideFlags: 0

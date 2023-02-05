@@ -25,6 +25,11 @@ public class Water : MonoBehaviour
     private void Update() 
     {
         if (transform.position != targetPosition)
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,
+                targetPosition, speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        EventManager.OnWaterCollected(other.gameObject.GetComponent<PlayerController>(), this);
     }
 }
