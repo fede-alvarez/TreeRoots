@@ -14,23 +14,23 @@ public class SimpleEnemy : MonoBehaviour
     private Tree tree;
 
     private Rigidbody2D rigidBody;
-    [SerializeField] private SpriteRenderer render;
-    [SerializeField] private Animator _animator;
+
+    [SerializeField]
+    private SpriteRenderer render;
+
+    [SerializeField]
+    private Animator _animator;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    private void Start() 
-    {
-        render.flipX = (transform.position.x > 0) ? true : false;
-    }
-
     public void ConfigureFor(Vector3 position)
     {
         gameObject.SetActive(true);
         transform.position = position;
+        render.flipX = position.x > 0;
         rigidBody.velocity = new Vector2(position.x < 0 ? speed : -speed, 0);
     }
 
@@ -56,12 +56,12 @@ public class SimpleEnemy : MonoBehaviour
     private IEnumerator Death()
     {
         yield return new WaitForSeconds(4);
-        EventManager.OnEnemyDied (this);
+        EventManager.OnEnemyDied(this);
     }
 
     private void Attack()
     {
-        tree.Damage(attackPower);
+        tree.Damage (attackPower);
         EventManager.OnTreeDamaged(tree.GetHealth);
     }
 }
