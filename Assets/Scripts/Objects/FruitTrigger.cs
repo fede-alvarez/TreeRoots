@@ -30,7 +30,7 @@ public class FruitTrigger : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || !_hasFruit) return;
         if (other.TryGetComponent(out PlayerController controller))
             _player = controller;
         
@@ -39,7 +39,7 @@ public class FruitTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || !_hasFruit) return;
         if (_player != null) _player = null;
 
         _group.DOFade(0, 1.0f);

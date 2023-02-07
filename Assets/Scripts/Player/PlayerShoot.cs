@@ -66,13 +66,9 @@ public class PlayerShoot : MonoBehaviour
             _rotation -= _rotationSpeed * Time.deltaTime;
 
         _rotation = Mathf.Clamp(_rotation, -_maxRotationAngle, _maxRotationAngle);
-
-        if (!isTopPlayer)
-        {
-            _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, -_rotation);    
-        }else{
-            _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0, _rotation);
-        }
+        
+        Quaternion finalRotation = Quaternion.Slerp(_trajectoryPivot.transform.rotation, Quaternion.Euler(0,0, _rotation), _rotationSpeed * Time.deltaTime);
+        _trajectoryPivot.transform.rotation = finalRotation;
     }
 
     public void Shoot()
@@ -86,7 +82,14 @@ public class PlayerShoot : MonoBehaviour
             AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ThrowFruite);
             bulletFruit.Shoot(_trajectoryPivot.transform.rotation);
             _fruits -= 1;
+            ResetRotation();
         }
+    }
+
+    private void ResetRotation()
+    {
+        _rotation = 0;
+        _trajectoryPivot.transform.rotation = Quaternion.Euler(0,0,0); 
     }
 
     private void ShootMode()
