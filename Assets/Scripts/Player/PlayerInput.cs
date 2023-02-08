@@ -1,37 +1,41 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    [Header("Controls")]
-    [SerializeField] private KeyCode _leftKey = KeyCode.A;
-    [SerializeField] private KeyCode _rightKey = KeyCode.D;
-    [SerializeField] private KeyCode _jumpKey = KeyCode.W;
-    [SerializeField] private KeyCode _actionKey = KeyCode.E;
-
     private PlayerController _controller;
 
     private float _playerMovement;
     private bool _playerJump;
     private bool _playerInteraction;
+    private Vector2 _movement = Vector2.zero;
 
     private void Awake() 
     {
         _controller = GetComponent<PlayerController>();    
     }
 
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _movement = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        _playerJump = context.action.triggered;
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        _playerInteraction = context.action.triggered;
+    }
+
     private void Update() 
     {
-        bool isTopPlayer = _controller.GetPlayerType == PlayerController.PlayerType.TopTree;
-        string axis = (isTopPlayer) ? "Horizontal" : "Horizontal2";
-        _playerMovement = Input.GetAxis(axis);
-
-        _playerJump = Input.GetKeyDown(_jumpKey);
-        _playerInteraction = Input.GetKeyDown(_actionKey);
+        _playerMovement = _movement.x;
     }
 
     public float GetMovement => _playerMovement;
     public bool GetJump => _playerJump;
-
-    public bool GetReleaseInteraction => Input.GetKeyUp(_actionKey);
     public bool GetInteraction => _playerInteraction;
 }
