@@ -10,13 +10,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerType _type = PlayerType.TopTree;
     [SerializeField] private float _speed = 5;
     [SerializeField] private float _jumpForce = 5;
+    [SerializeField] private float _fallGravity = 3.5f;
+    
 
     [Header("Animations")]
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private Animator _animator;
 
     private float _movement;
+    private float _groundGravity;
     private bool _desiredJump = false;
+
     private bool _isGrounded = false;
 
     private bool _hasWater = false;
@@ -37,6 +41,19 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _input = GetComponent<PlayerInput>();
         _shoot = GetComponent<PlayerShoot>();
+
+        _groundGravity = _rb.gravityScale;
+    }
+
+    private void Start() 
+    {
+        EventManager.PlayerJumped += OnPlayerJump;
+    }
+
+    private void OnPlayerJump()
+    {
+        if (!_isGrounded) return;
+        _desiredJump = true;
     }
 
     private void Update() 
@@ -53,12 +70,14 @@ public class PlayerController : MonoBehaviour
              _renderer.flipX = true;
 
         _animator.SetBool("Walking", (_rb.velocity.magnitude > 0.1f) ? true : false);
-        
-        // Jump Handling
-        bool jumpPressed = _input.GetJump;
 
-        if (jumpPressed && _isGrounded)
-            _desiredJump = true;
+        // Manejo de la gravedad        
+        if (!_isGrounded && _rb.velocity.y < 0) 
+        {
+            _rb.gravityScale = _fallGravity;
+        }else{
+            _rb.gravityScale = _groundGravity;
+        }
     }
 
     private void FixedUpdate()
@@ -126,6 +145,11 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - _rayOffset, _raySize);
     }
 
+    private void OnDestroy() 
+    {
+        EventManager.PlayerJumped -= OnPlayerJump;
+    }
+
     public bool DisableMovement 
     {
         set { _disableMovement = value; }
@@ -141,11 +165,6 @@ public class PlayerController : MonoBehaviour
     {
         get { return _hasWater; }
         set { _hasWater = value; }
-    }
-
-    public bool InteractionPressed
-    {
-        get { return _input.GetInteraction; }
     }
 
     public PlayerType GetPlayerType => _type;

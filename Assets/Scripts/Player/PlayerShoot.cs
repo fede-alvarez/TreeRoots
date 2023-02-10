@@ -34,22 +34,26 @@ public class PlayerShoot : MonoBehaviour
     private void Start() 
     {
         EventManager.FruitCollected += OnFruitCollected;  
+        EventManager.PlayerInteracted += OnPlayerInteracted;
+
         _trajectoryLine.gameObject.SetActive(false);
     }
 
-    private void Update() 
+    private void OnPlayerInteracted()
     {
-        _horizontalMovement = _input.GetMovement;
-        _actionPressed = _input.GetInteraction;
-        
-        if (_isDelayed && _canShoot && _fruits > 0 && _actionPressed)
+        if (_isDelayed && _canShoot && _fruits > 0)
         {
             _canShoot = false;
             _isDelayed = false;
             Shoot();
             NormalMode();
         }
-
+    }
+    
+    private void Update() 
+    {
+        _horizontalMovement = _input.GetMovement;
+        
         if (!_canShoot) return;
         CalculateTrajectory();
     }
@@ -131,6 +135,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void OnDestroy() 
     {
+        EventManager.PlayerInteracted -= OnPlayerInteracted;
         EventManager.FruitCollected -= OnFruitCollected;
     }
 }

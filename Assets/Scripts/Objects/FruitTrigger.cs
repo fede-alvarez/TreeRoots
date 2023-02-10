@@ -11,11 +11,16 @@ public class FruitTrigger : MonoBehaviour
     private FruitResource _fruit;
     private PlayerController _player;
 
-    private void Update() 
+    private void Start() 
+    {
+        EventManager.PlayerInteracted += OnPlayerInteracted;
+    }
+
+    private void OnPlayerInteracted()
     {
         if (!_hasFruit) return;
 
-        if (_player != null && _player.InteractionPressed)
+        if (_player != null)
         {
             _group.DOFade(0, 1.0f);
 
@@ -24,9 +29,8 @@ public class FruitTrigger : MonoBehaviour
             RemoveFruit();
 
             _player.CanShoot = true;
-        }    
+        }
     }
-
     
     private void OnTriggerEnter2D(Collider2D other) 
     {
@@ -66,5 +70,10 @@ public class FruitTrigger : MonoBehaviour
     private void SetDropState(bool state)
     {
         _waterDropParent.GetChild(_waterDropIndex).gameObject.SetActive(state);
+    }
+
+    private void OnDestroy() 
+    {
+        EventManager.PlayerInteracted += OnPlayerInteracted;
     }
 }

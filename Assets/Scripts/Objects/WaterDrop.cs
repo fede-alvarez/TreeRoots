@@ -10,18 +10,21 @@ public class WaterDrop : MonoBehaviour
     private PlayerController _player;
     
     private bool _hasWater = false;
+    private bool _isInside = false;
 
-    private void Update() 
+    private void Start() 
     {
-        if (_player == null || !_player.HasWater) return;
-        if (_player.InteractionPressed)
-        {
-            CreateResource();
-            _player.HasWater = false;
-            //_resourcesParent.GetChild(_branchIndex).gameObject.SetActive(true);
-            gameObject.SetActive(false);
-            AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ActivateRoot);
-        }
+        EventManager.PlayerInteracted += OnPlayerInteracted;
+    }
+
+    private void OnPlayerInteracted()
+    {
+        if (!_isInside || _player == null || !_player.HasWater) return;
+        CreateResource();
+        _player.HasWater = false;
+        gameObject.SetActive(false);
+        
+        AudioManager.GetInstance.PlaySound(AudioManager.AudioList.ActivateRoot);
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -32,6 +35,7 @@ public class WaterDrop : MonoBehaviour
         {
             _player = player;
             _hasWater = player.HasWater;
+            _isInside = true;
         }
     }
 
@@ -46,12 +50,18 @@ public class WaterDrop : MonoBehaviour
             FruitResource f = Instantiate(_fruitPrefab, resource.position, Quaternion.identity);
             if (f == null) return;
             fruit.SetFruit(f);
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) 
     {
         if (!other.CompareTag("Player")) return;
+        _isInside = false;
+    }
 
+    private void OnDestroy() 
+    {
+        EventManager.PlayerInteracted -= OnPlayerInteracted;
     }
 }

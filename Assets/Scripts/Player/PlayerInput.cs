@@ -4,10 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerController _controller;
-
     private float _playerMovement;
-    private bool _playerJump;
-    private bool _playerInteraction;
     private Vector2 _movement = Vector2.zero;
 
     private void Awake() 
@@ -22,12 +19,14 @@ public class PlayerInput : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        _playerJump = context.action.triggered;
+        if (!context.started) return;
+        EventManager.OnPlayerJumped();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        _playerInteraction = context.action.triggered;
+        if (!context.started) return;
+        EventManager.OnPlayerInteracted();
     }
 
     private void Update() 
@@ -36,6 +35,4 @@ public class PlayerInput : MonoBehaviour
     }
 
     public float GetMovement => _playerMovement;
-    public bool GetJump => _playerJump;
-    public bool GetInteraction => _playerInteraction;
 }

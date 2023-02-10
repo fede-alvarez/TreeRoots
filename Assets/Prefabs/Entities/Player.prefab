@@ -683,7 +683,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6609394353363575759}
   - component: {fileID: 4250493525209966580}
-  - component: {fileID: 6609394353363575756}
+  - component: {fileID: 7447584353854093850}
+  - component: {fileID: 6186600268583743972}
   - component: {fileID: 6609394353363575757}
   - component: {fileID: 4488450216594528984}
   - component: {fileID: 6609394353363575730}
@@ -792,8 +793,24 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!58 &6609394353363575756
-CircleCollider2D:
+--- !u!70 &7447584353854093850
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6609394353363575731}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0106675625, y: 0.10193682}
+  m_Size: {x: 0.36487436, y: 0.69656086}
+  m_Direction: 0
+--- !u!61 &6186600268583743972
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -805,9 +822,19 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.05607462, y: 0.10146892}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Size: {x: 0.3516245, y: 0.6834605}
+  m_EdgeRadius: 0
 --- !u!50 &6609394353363575757
 Rigidbody2D:
   serializedVersion: 4
@@ -854,8 +881,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _speed: 5
-  _jumpForce: 5
+  _speed: 4
+  _jumpForce: 3
+  _fallGravity: 1
   _renderer: {fileID: 7080357784369255408}
   _animator: {fileID: 1918455717225893238}
 --- !u!114 &6609394353363575758

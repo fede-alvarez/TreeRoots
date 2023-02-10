@@ -3,26 +3,36 @@ using DG.Tweening;
 
 public class Elevator : MonoBehaviour
 {
-    public Elevator otherElevator; //usar esto para que se muevan asincronicamente //usar gamecomponet
+    [Header("Elevator")]
+    public Elevator otherElevator;
 
+    [Header("Targets")]
     public Transform upTarget;
     public Transform downTarget;
+
+    [Header("Direction")]
     public bool isGoingUp = true;
 
+    [Header("Required")]
     public Transform playerParent;
+
+    [Header("UI")]
+    [SerializeField] private CanvasGroup _uiTextGroup;
+
+    private PlayerController _controller;
     private bool _isMoving = false;
     private bool _isIn = false;
-    private PlayerController _controller;
-
-    private void Update() 
+    
+    private void Start() 
     {
-        if (_controller == null) return;
+        EventManager.PlayerInteracted += OnPlayerInteracted;
+    }
 
-        if (_controller.InteractionPressed && _isIn)
-        {
-            print("Esto se ejecuta mucho?");
-            _controller.DisablePhysics(transform);
-        }
+    private void OnPlayerInteracted()
+    {
+        if (_controller == null || !_isIn) return;
+        _controller.DisablePhysics(transform);
+        _controller.transform.localPosition = new Vector3(0,-0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -33,6 +43,18 @@ public class Elevator : MonoBehaviour
         {
             _controller = player;
             _isIn = true;
+            _uiTextGroup.DOFade(1, 0.5f);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        if (_isMoving || !other.CompareTag("Player") || _isIn) return;
+        if (other.TryGetComponent(out PlayerController player))
+        {
+            _controller = player;
+            _isIn = true;
+            _uiTextGroup.DOFade(1, 0.5f);
         }
     }
 
@@ -42,11 +64,13 @@ public class Elevator : MonoBehaviour
 
         if (_controller != null) _controller = null;
         _isIn = false;
+        _uiTextGroup.DOFade(0, 0.5f);
     }
 
     public void Move()
     {
         _isMoving = true;
+        _uiTextGroup.DOFade(0, 0.5f);
 
         transform.DOMove( (isGoingUp) ? upTarget.position : downTarget.position, 2.0f)
                  .SetEase(Ease.Linear)
@@ -63,5 +87,10 @@ public class Elevator : MonoBehaviour
                         _controller = null;
                     }
                  });
+    }
+
+    private void OnDestroy() 
+    {
+        EventManager.PlayerInteracted -= OnPlayerInteracted;
     }
 }
