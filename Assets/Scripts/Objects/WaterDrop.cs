@@ -12,14 +12,12 @@ public class WaterDrop : MonoBehaviour
     private bool _hasWater = false;
     private bool _isInside = false;
 
-    private void Start() 
-    {
-        EventManager.PlayerInteracted += OnPlayerInteracted;
-    }
-
-    private void OnPlayerInteracted()
+    private void Update()
     {
         if (!_isInside || _player == null || !_player.HasWater) return;
+        if (!_player.GetInput.GetInteract) return;
+        _player.GetInput.ResetInteract();
+        
         CreateResource();
         _player.HasWater = false;
         gameObject.SetActive(false);
@@ -58,10 +56,5 @@ public class WaterDrop : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         _isInside = false;
-    }
-
-    private void OnDestroy() 
-    {
-        EventManager.PlayerInteracted -= OnPlayerInteracted;
     }
 }

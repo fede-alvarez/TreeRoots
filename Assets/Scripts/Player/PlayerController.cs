@@ -45,17 +45,6 @@ public class PlayerController : MonoBehaviour
         _groundGravity = _rb.gravityScale;
     }
 
-    private void Start() 
-    {
-        EventManager.PlayerJumped += OnPlayerJump;
-    }
-
-    private void OnPlayerJump()
-    {
-        if (!_isGrounded) return;
-        _desiredJump = true;
-    }
-
     private void Update() 
     {
         GroundCheck();
@@ -71,7 +60,14 @@ public class PlayerController : MonoBehaviour
 
         _animator.SetBool("Walking", (_rb.velocity.magnitude > 0.1f) ? true : false);
 
-        // Manejo de la gravedad        
+        // When Grounded...
+        if (_isGrounded && _input.GetJump)
+        {
+            _input.ResetJump();
+            _desiredJump = true;
+        }
+        
+        // Gravity manipulation...
         if (!_isGrounded && _rb.velocity.y < 0) 
         {
             _rb.gravityScale = _fallGravity;
@@ -145,11 +141,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - _rayOffset, _raySize);
     }
 
-    private void OnDestroy() 
-    {
-        EventManager.PlayerJumped -= OnPlayerJump;
-    }
-
     public bool DisableMovement 
     {
         set { _disableMovement = value; }
@@ -168,6 +159,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public PlayerType GetPlayerType => _type;
+    public PlayerInput GetInput => _input;
 
     public bool IsTopPlayer => _type == PlayerType.TopTree;
 }

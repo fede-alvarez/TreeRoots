@@ -3,13 +3,6 @@ using UnityEngine.Events;
 
 public static class EventManager
 {
-    #region Player Related
-    public static event UnityAction PlayerInteracted;
-    public static event UnityAction PlayerJumped;
-    public static void OnPlayerInteracted() => PlayerInteracted?.Invoke();
-    public static void OnPlayerJumped() => PlayerJumped?.Invoke();
-    #endregion
-
     #region Fruits Related
     public static event UnityAction FruitCollected;
     public static event UnityAction FruitSpawned;

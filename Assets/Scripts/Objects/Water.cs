@@ -35,6 +35,8 @@ public class Water : MonoBehaviour
 
         if (other.TryGetComponent(out PlayerController player))
         {
+            if (player.HasWater) return;
+            
             player.HasWater = true;
             EventManager.OnWaterCollected(other.gameObject.GetComponent<PlayerController>(), this);
             AudioManager.GetInstance.PlaySound(AudioManager.AudioList.Water);

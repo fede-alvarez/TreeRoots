@@ -11,17 +11,14 @@ public class FruitTrigger : MonoBehaviour
     private FruitResource _fruit;
     private PlayerController _player;
 
-    private void Start() 
-    {
-        EventManager.PlayerInteracted += OnPlayerInteracted;
-    }
 
-    private void OnPlayerInteracted()
+    private void Update()
     {
         if (!_hasFruit) return;
-
-        if (_player != null)
-        {
+        
+        if (_player != null && _player.GetInput.GetInteract)
+        {    
+            _player.GetInput.ResetInteract();
             _group.DOFade(0, 1.0f);
 
             AudioManager.GetInstance.PlaySound(AudioManager.AudioList.PickNutrients);
@@ -70,10 +67,5 @@ public class FruitTrigger : MonoBehaviour
     private void SetDropState(bool state)
     {
         _waterDropParent.GetChild(_waterDropIndex).gameObject.SetActive(state);
-    }
-
-    private void OnDestroy() 
-    {
-        EventManager.PlayerInteracted += OnPlayerInteracted;
     }
 }

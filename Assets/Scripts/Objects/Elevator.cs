@@ -23,14 +23,12 @@ public class Elevator : MonoBehaviour
     private bool _isMoving = false;
     private bool _isIn = false;
     
-    private void Start() 
-    {
-        EventManager.PlayerInteracted += OnPlayerInteracted;
-    }
-
-    private void OnPlayerInteracted()
+    private void Update()
     {
         if (_controller == null || !_isIn) return;
+        if (!_controller.GetInput.GetInteract) return;
+        _controller.GetInput.ResetInteract();
+        
         _controller.DisablePhysics(transform);
         _controller.transform.localPosition = new Vector3(0,-0.1f);
     }
@@ -87,10 +85,5 @@ public class Elevator : MonoBehaviour
                         _controller = null;
                     }
                  });
-    }
-
-    private void OnDestroy() 
-    {
-        EventManager.PlayerInteracted -= OnPlayerInteracted;
     }
 }

@@ -367,6 +367,14 @@ PrefabInstance:
       propertyPath: _type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6609394353363575730, guid: 98f6aea4fc4aa4579abd26b72f697641, type: 3}
+      propertyPath: _jumpForce
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6609394353363575730, guid: 98f6aea4fc4aa4579abd26b72f697641, type: 3}
+      propertyPath: _fallGravity
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6609394353363575731, guid: 98f6aea4fc4aa4579abd26b72f697641, type: 3}
       propertyPath: m_Name
       value: Mole

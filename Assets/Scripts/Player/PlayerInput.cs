@@ -5,6 +5,8 @@ public class PlayerInput : MonoBehaviour
 {
     private PlayerController _controller;
     private float _playerMovement;
+    private bool _playerJump;
+    private bool _playerInteract;
     private Vector2 _movement = Vector2.zero;
 
     private void Awake() 
@@ -20,13 +22,13 @@ public class PlayerInput : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        EventManager.OnPlayerJumped();
+        _playerJump = true;
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        EventManager.OnPlayerInteracted();
+        _playerInteract = true;
     }
 
     private void Update() 
@@ -35,4 +37,16 @@ public class PlayerInput : MonoBehaviour
     }
 
     public float GetMovement => _playerMovement;
+    public bool GetJump => _playerJump;
+    public bool GetInteract => _playerInteract;
+
+    public void ResetInteract()
+    {
+        _playerInteract = false;
+    }
+
+    public void ResetJump()
+    {
+        _playerJump = false;
+    }
 }
